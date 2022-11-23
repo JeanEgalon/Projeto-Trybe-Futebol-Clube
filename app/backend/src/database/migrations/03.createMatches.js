@@ -2,14 +2,12 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('matches', {
       id: {
-        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
       home_team: {
-        allowNull: false,
-        type: Sequelize.STRING(30),
+        type: Sequelize.INTEGER,
         references: {
           model: 'teams',
           key: 'id'
@@ -17,11 +15,11 @@ module.exports = {
       },
       home_team_goals: {
         allowNull: false,
-        type: Sequelize.STRING(30),
+        type: Sequelize.INTEGER,
       },
       away_team: {
         allowNull: false,
-        type: Sequelize.STRING(30),
+        type: Sequelize.INTEGER,
         references: {
           model: 'teams',
           key: 'id'
@@ -29,7 +27,7 @@ module.exports = {
       },
       away_team_goals: {
         allowNull: false,
-        type: Sequelize.STRING(30),
+        type: Sequelize.INTEGER,
       },
       in_progress: {
         allowNull: false,

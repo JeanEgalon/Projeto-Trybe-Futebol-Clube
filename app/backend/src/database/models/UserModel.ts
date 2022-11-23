@@ -18,19 +18,19 @@ UserModel.init({
   },
   username: {
     allowNull: false,
-    type: STRING(30),
+    type: STRING,
   },
   role: {
     allowNull: false,
-    type: STRING(30),
+    type: STRING,
   },
   email: {
     allowNull: false,
-    type: STRING(30),
+    type: STRING,
   },
   password: {
     allowNull: false,
-    type: STRING(30),
+    type: STRING,
   },
 }, {
   underscored: true,
