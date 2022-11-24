@@ -9,9 +9,15 @@ export default class validate {
     const { email } = req.body;
     const formatEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
 
-    if (!formatEmail.test(email) || !email) {
+    if (!email) {
       return res.status(400).json(
-        { message: '"email" must be a valid email' },
+        { message: 'Email não informado' },
+      );
+    }
+
+    if (!formatEmail.test(email)) {
+      return res.status(400).json(
+        { message: 'Email inválido' },
       );
     }
 
@@ -24,7 +30,7 @@ export default class validate {
     next: NextFunction,
   ) {
     const { password } = req.body;
-    const message = 'Incorrect password';
+    const message = 'A senha precisa ter no mínimo 6 caracteres';
 
     if (password.length < 6) return res.status(400).json({ message });
 

@@ -6,7 +6,7 @@ import { NextFunction, Request, Response } from 'express';
 
 import LoginController from '../controllers/LoginController';
 import ErrorMiddleware from '../middlewares/ErrorMiddleware';
-import validate from '../middlewares/validateEmail';
+import validate from '../middlewares/validate';
 
 const router = express.Router();
 

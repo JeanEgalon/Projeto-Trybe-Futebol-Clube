@@ -6,6 +6,7 @@ export default class LoginController {
     const { email, password } = req.body;
 
     const result = await LoginService.login(email, password);
+    console.log(result);
 
     res.status(200).json(result);
   }
