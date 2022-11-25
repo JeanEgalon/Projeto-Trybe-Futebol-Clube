@@ -11,10 +11,6 @@ export const create = (valor: IUser): string => jwt.sign({ valor }, secret, {
 });
 
 export const validate = (token: string) => {
-  try {
-    const result = jwt.verify(token, secret);
-    return result;
-  } catch (e) {
-    return e;
-  }
+  const result = jwt.verify(token, secret);
+  return result;
 };
