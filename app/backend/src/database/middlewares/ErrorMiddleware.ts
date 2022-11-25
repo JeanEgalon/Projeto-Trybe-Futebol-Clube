@@ -8,7 +8,7 @@ export default class ErrorMiddleware {
     _next: NextFunction,
   ) {
     if (error instanceof Error) {
-      return res.status(500).json(error.message);
+      return res.status(401).json({ message: error.message });
     }
     return res.status(500).json('Erro não definido');
   }

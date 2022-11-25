@@ -1,31 +1,30 @@
+import * as bcrypt from 'bcryptjs';
 import IUser from '../entities/IUser';
 import UserModel from '../models/UserModel';
+import { create } from '../utils/jwt.util';
 
 export default class LoginService {
-  static async login(email: string, _password: string): Promise<IUser> {
-    const uEmail = await LoginService.buscaEmail(email);
-    return uEmail;
+  static async login(email: string, password: string): Promise<string> {
+    const uEmail = await LoginService.findUser(email, password);
+
+    const token = create(uEmail);
+
+    return token;
   }
 
-  private static async buscaEmail(email: string): Promise<IUser> {
+  private static async findUser(email: string, password: string): Promise<IUser> {
     const userEmail = await UserModel.findOne({ where: { email } });
+
     if (!userEmail) {
-      throw new Error('Conta não encontrada');
+      throw new Error('Incorrect email or password');
     }
 
-    const { password: _, ...userWithoutPassword } = userEmail.dataValues;
+    const descriptografar = bcrypt.compareSync(password, userEmail?.dataValues.password);
 
-    return userWithoutPassword;
-  }
-
-  private static async buscaPassword(password: string): Promise<IUser> {
-    const userPassword = await UserModel.findOne({ where: { password } });
-    if (!userPassword) {
-      throw new Error('Senha não encontrada');
+    if (!descriptografar) {
+      throw new Error('Incorrect email or password');
     }
 
-    const senha = userPassword.dataValues.password;
-
-    return senha;
+    return userEmail;
   }
 }

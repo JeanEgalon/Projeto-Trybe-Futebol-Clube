@@ -20,6 +20,12 @@ router.post(
     LoginController.login(req, res),
 );
 
+router.get(
+  '/login/validate',
+  (req: Request, res: Response) =>
+    LoginController.loginValidate(req, res),
+);
+
 router.use(ErrorMiddleware.handler);
 
 export default router;

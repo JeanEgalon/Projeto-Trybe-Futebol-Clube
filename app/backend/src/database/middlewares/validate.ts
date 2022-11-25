@@ -11,13 +11,13 @@ export default class validate {
 
     if (!email) {
       return res.status(400).json(
-        { message: 'Email não informado' },
+        { message: 'All fields must be filled' },
       );
     }
 
     if (!formatEmail.test(email)) {
-      return res.status(400).json(
-        { message: 'Email inválido' },
+      return res.status(401).json(
+        { message: 'Incorrect email or password' },
       );
     }
 
@@ -30,9 +30,16 @@ export default class validate {
     next: NextFunction,
   ) {
     const { password } = req.body;
-    const message = 'A senha precisa ter no mínimo 6 caracteres';
 
-    if (password.length < 6) return res.status(400).json({ message });
+    if (!password) {
+      return res.status(400).json(
+        { message: 'All fields must be filled' },
+      );
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Incorrect email or password' });
+    }
 
     next();
   }
