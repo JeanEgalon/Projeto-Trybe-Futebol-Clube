@@ -31,6 +31,16 @@ export default class MatchService {
     return match;
   }
 
+  static async changeInProgressMatches(id: number, homeTeamGoals: number, awayTeamGoals: number) {
+    await MatchModel.update({ homeTeamGoals }, {
+      where: { id },
+    });
+
+    await MatchModel.update({ awayTeamGoals }, {
+      where: { id },
+    });
+  }
+
   static async getMatchsInProgress(inProgress: string | unknown): Promise<IMatch[]> {
     const uEmail = await MatchService.findAllMatchs() as IMatch[];
     let param = false;

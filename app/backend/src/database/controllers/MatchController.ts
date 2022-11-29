@@ -23,6 +23,17 @@ export default class MatchController {
   static async changeStatusOfMatch(req: Request, res: Response) {
     const { id } = req.params;
 
+    if (req.body.homeTeamGoals && req.body.awayTeamGoals) {
+      const { homeTeamGoals, awayTeamGoals } = req.body;
+      await MatchService.changeInProgressMatches(
+        Number(id),
+        Number(homeTeamGoals),
+        Number(awayTeamGoals),
+      );
+
+      return res.status(200).json({ message: 'Done!' });
+    }
+
     await MatchService.changeStatusOfMatch(Number(id));
     return res.status(200).json({ message: 'Finished' });
   }

@@ -32,6 +32,12 @@ router.patch(
     MatchController.changeStatusOfMatch(req, res),
 );
 
+router.patch(
+  '/matches/:id',
+  (req: Request, res: Response) =>
+    MatchController.changeStatusOfMatch(req, res),
+);
+
 router.use(ErrorMiddleware.handler);
 
 export default router;
