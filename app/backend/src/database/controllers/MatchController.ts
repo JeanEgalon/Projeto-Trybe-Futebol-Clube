@@ -12,4 +12,18 @@ export default class MatchController {
     const result = await MatchService.getMatchs();
     return res.status(200).json(result);
   }
+
+  static async saveMatch(req: Request, res: Response) {
+    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
+
+    const result = await MatchService.saveMatch(homeTeam, awayTeam, homeTeamGoals, awayTeamGoals);
+    return res.status(201).json(result);
+  }
+
+  static async changeStatusOfMatch(req: Request, res: Response) {
+    const { id } = req.params;
+
+    await MatchService.changeStatusOfMatch(Number(id));
+    return res.status(200).json({ message: 'Finished' });
+  }
 }

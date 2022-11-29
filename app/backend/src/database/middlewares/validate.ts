@@ -1,4 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
+import { validate as validateToken } from '../utils/jwt.util';
+
+type MyToken = {
+  valor: {
+    id: number,
+    username: string,
+    role: string,
+    email: string,
+    password: string
+  },
+  iat: number,
+  exp: number,
+  message: string
+};
 
 export default class validate {
   static email(
@@ -41,6 +55,38 @@ export default class validate {
       return res.status(400).json({ message: 'Incorrect email or password' });
     }
 
+    next();
+  }
+
+  static token(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const { authorization } = req.headers;
+
+    try {
+      validateToken(authorization as string) as MyToken;
+      next();
+    } catch (_e) {
+      return res.status(401).json(
+        { message: 'Token must be a valid token' },
+      );
+    }
+  }
+
+  static teams(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const { homeTeam, awayTeam } = req.body;
+
+    if (homeTeam === awayTeam) {
+      return res.status(422).json(
+        { message: 'It is not possible to create a match with two equal teams' },
+      );
+    }
     next();
   }
 }

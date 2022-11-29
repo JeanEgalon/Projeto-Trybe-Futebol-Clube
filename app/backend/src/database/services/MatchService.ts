@@ -1,4 +1,5 @@
 import IMatch from '../entities/IMatch';
+import INewMatch from '../entities/INewMatch';
 import MatchModel from '../models/MatchModel';
 import TeamModel from '../models/TeamModel';
 
@@ -7,6 +8,27 @@ export default class MatchService {
     const uEmail = await MatchService.findAllMatchs();
 
     return uEmail;
+  }
+
+  static async saveMatch(
+    homeTeam: number,
+    awayTeam: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ) {
+    const matches = await MatchService.saveNewMatch(
+      homeTeam,
+      awayTeam,
+      homeTeamGoals,
+      awayTeamGoals,
+    );
+
+    return matches;
+  }
+
+  static async changeStatusOfMatch(id: number) {
+    const match = await MatchModel.update({ inProgress: 0 }, { where: { id } });
+    return match;
   }
 
   static async getMatchsInProgress(inProgress: string | unknown): Promise<IMatch[]> {
@@ -30,5 +52,23 @@ export default class MatchService {
     });
 
     return userEmail;
+  }
+
+  private static async saveNewMatch(
+    homeTeam: number,
+    awayTeam: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<INewMatch> {
+    const inProgress = true;
+    const match = MatchModel.create({
+      homeTeam,
+      awayTeam,
+      homeTeamGoals,
+      awayTeamGoals,
+      inProgress,
+    });
+
+    return match;
   }
 }
