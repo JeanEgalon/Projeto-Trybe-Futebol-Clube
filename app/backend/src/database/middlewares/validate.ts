@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import TeamService from '../services/TeamService';
 import { validate as validateToken } from '../utils/jwt.util';
 
 type MyToken = {
@@ -75,12 +76,19 @@ export default class validate {
     }
   }
 
-  static teams(
+  static async teams(
     req: Request,
     res: Response,
     next: NextFunction,
   ) {
     const { homeTeam, awayTeam } = req.body;
+
+    const findHomeTeam = await TeamService.getTeamById(homeTeam);
+    const findAwayTeam = await TeamService.getTeamById(awayTeam);
+
+    if (!findHomeTeam || !findAwayTeam) {
+      return res.status(404).json({ message: 'There is no team with such id!' });
+    }
 
     if (homeTeam === awayTeam) {
       return res.status(422).json(
