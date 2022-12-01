@@ -1,15 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
+import { Error } from 'sequelize';
 
 export default class ErrorMiddleware {
   static handler(
-    error: unknown,
+    error: Error,
     _req: Request,
     res: Response,
     _next: NextFunction,
   ) {
-    if (error instanceof Error) {
-      return res.status(401).json({ message: error.message });
-    }
-    return res.status(500).json('Erro não definido');
+    return res.status(401).json({ message: error.message });
   }
 }
