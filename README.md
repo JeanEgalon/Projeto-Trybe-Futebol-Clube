@@ -194,7 +194,7 @@ Aqui você encontrará orientações e dicas que ajudarão muito no desenvolvime
   - Quais são os tipos de suas colunas;
   - Relações entre tabelas.
 
-    ![Exemplo banco de dados](assets/diagrama-er.png)
+    ![Exemplo banco de dados](diagrama-er.png)
 
   ⚠️ O `package.json` do diretório `app/backend` contém um script `db:reset` que é responsável por "dropar" o banco, recriar e executar as _migrations_ e _seeders_. Você pode executá-lo com o commando `npm run db:reset` se por algum motivo precisar recriar a base de dados;
 
