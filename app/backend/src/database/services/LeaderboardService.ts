@@ -1,11 +1,14 @@
-import { desempenhoAwayTeam, desempenhoHomeTeam, order } from '../utils/someFunctions';
+import {
+  desempenhoAwayTeam, desempenhoGeralDasEquipes, desempenhoHomeTeam, order,
+} from '../utils/someFunctions';
 import MatchService from './MatchService';
 
 export default class LeaderboardService {
-  static async classificationLeader() {
+  static async classification() {
     const matches = await MatchService.getMatchsInProgress('false');
-    const leaderboard = desempenhoHomeTeam(matches);
-    return leaderboard;
+    const leaderboard = desempenhoGeralDasEquipes(matches);
+    const result = order(leaderboard);
+    return result;
   }
 
   static async filterByHomeTeam() {

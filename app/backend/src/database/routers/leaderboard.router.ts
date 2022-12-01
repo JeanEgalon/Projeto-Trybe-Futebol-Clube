@@ -12,7 +12,7 @@ const router = express.Router();
 router.get(
   '/leaderboard',
   (req: Request, res: Response) =>
-    LeaderboardController.classificationLeader(req, res),
+    LeaderboardController.classification(req, res),
 );
 
 router.get(

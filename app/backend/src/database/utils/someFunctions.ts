@@ -91,6 +91,29 @@ export const desempenhoAwayTeam = (matches: IMatch[]): IResult[] => {
   return table;
 };
 
+export const desempenhoGeralDasEquipes = (matches: IMatch[]): IResult[] => {
+  const table: IResult[] = [];
+  matches.forEach(({ homeTeamGoals, awayTeamGoals, teamHome, teamAway }) => {
+    const indexDoTimeDeFora = table.findIndex((e) => e.name === teamAway.teamName);
+    const dataTimeDeFora = desempenhoNaPartida(awayTeamGoals, homeTeamGoals);
+
+    const indexDoTimeDaCasa = table.findIndex((e) => e.name === teamHome.teamName);
+    const dataTimeDaCasa = desempenhoNaPartida(homeTeamGoals, awayTeamGoals);
+
+    if (indexDoTimeDeFora < 0) {
+      table.push({ name: teamAway.teamName, ...dataTimeDeFora });
+    } else {
+      table[indexDoTimeDeFora] = atualizar(table[indexDoTimeDeFora], dataTimeDeFora);
+    }
+    if (indexDoTimeDaCasa < 0) {
+      table.push({ name: teamHome.teamName, ...dataTimeDaCasa });
+    } else {
+      table[indexDoTimeDaCasa] = atualizar(table[indexDoTimeDaCasa], dataTimeDaCasa);
+    }
+  });
+  return table;
+};
+
 export const order = (border: IResult[]): IResult[] => {
   const newBorder: IResult[] = border;
   newBorder.sort((a, b) => (
