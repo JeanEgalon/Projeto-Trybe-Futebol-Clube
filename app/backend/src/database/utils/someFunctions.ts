@@ -4,20 +4,20 @@ import IResult from '../entities/IResult';
 export const resultadoDaPartida = (golsMarcados: number, golsSofridos: number) => {
   const resultado = {
     vitoria: 0,
-    empate: 1,
+    empate: 0,
     derrota: 0,
-    pontosFeitos: 1,
+    pontosFeitos: 0,
   };
 
   if (golsMarcados > golsSofridos) {
-    resultado.vitoria = 1;
-    resultado.pontosFeitos = 3;
-    resultado.empate = 0;
+    resultado.vitoria = 1; resultado.pontosFeitos = 3;
   }
   if (golsSofridos > golsMarcados) {
-    resultado.derrota = 1;
-    resultado.pontosFeitos = 0;
-    resultado.empate = 0;
+    resultado.derrota = 1; resultado.pontosFeitos = 0;
+  }
+
+  if (golsMarcados === golsSofridos) {
+    resultado.empate = 1; resultado.pontosFeitos = 1;
   }
 
   return resultado;
@@ -59,7 +59,7 @@ const atualizar = (team: IResult, game: IResult): IResult => {
   return result;
 };
 
-export const desempenhoDaEquipeNoCampeonato = (matches: IMatch[]): IResult[] => {
+export const desempenhoHomeTeam = (matches: IMatch[]): IResult[] => {
   const table: IResult[] = [];
   matches.forEach(({ homeTeamGoals, awayTeamGoals, teamHome }) => {
     const teamIndexInName = table.findIndex((e) => e.name === teamHome.teamName);
@@ -67,6 +67,22 @@ export const desempenhoDaEquipeNoCampeonato = (matches: IMatch[]): IResult[] => 
 
     if (teamIndexInName < 0) {
       table.push({ name: teamHome.teamName, ...data });
+    } else {
+      table[teamIndexInName] = atualizar(table[teamIndexInName], data);
+    }
+  });
+
+  return table;
+};
+
+export const desempenhoAwayTeam = (matches: IMatch[]): IResult[] => {
+  const table: IResult[] = [];
+  matches.forEach(({ homeTeamGoals, awayTeamGoals, teamAway }) => {
+    const teamIndexInName = table.findIndex((e) => e.name === teamAway.teamName);
+    const data = desempenhoNaPartida(awayTeamGoals, homeTeamGoals);
+
+    if (teamIndexInName < 0) {
+      table.push({ name: teamAway.teamName, ...data });
     } else {
       table[teamIndexInName] = atualizar(table[teamIndexInName], data);
     }

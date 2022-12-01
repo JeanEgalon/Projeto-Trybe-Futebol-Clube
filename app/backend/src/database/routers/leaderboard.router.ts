@@ -18,7 +18,13 @@ router.get(
 router.get(
   '/leaderboard/home',
   (req: Request, res: Response) =>
-    LeaderboardController.classification(req, res),
+    LeaderboardController.filterByHomeTeam(req, res),
+);
+
+router.get(
+  '/leaderboard/away',
+  (req: Request, res: Response) =>
+    LeaderboardController.filterByAwayTeam(req, res),
 );
 
 router.use(ErrorMiddleware.handler);

@@ -7,8 +7,14 @@ export default class LeaderboardController {
     res.status(200).json(result);
   }
 
-  static async classification(req: Request, res: Response) {
-    const result = await LeaderboardService.classification();
+  static async filterByHomeTeam(req: Request, res: Response) {
+    const result = await LeaderboardService.filterByHomeTeam();
+
+    res.status(200).json(result);
+  }
+
+  static async filterByAwayTeam(req: Request, res: Response) {
+    const result = await LeaderboardService.filterByAwayTeam();
 
     res.status(200).json(result);
   }
