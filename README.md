@@ -119,18 +119,18 @@ Aqui você encontrará orientações e dicas que ajudarão muito no desenvolvime
 
 - Caso os containers respeitem as premissas anteriores, os mesmos devem ser criados sem maiores problemas:
 
-![Criação dos containers concluída com sucesso!](assets/compose-status-01.png)
+![Criação dos containers concluída com sucesso!](compose-status-01.png)
 
 - Em caso de algum problema (no back-end, por exemplo), você deve se deparar com alguma mensagem do tipo:
 
-![Erro no status de saúde do container do back-end](assets/compose-status-03.png)
+![Erro no status de saúde do container do back-end](compose-status-03.png)
 
 > ⚠️ Lembre-se, não cabe ao avaliador de usabilidade dizer qual é o problema específico na sua aplicação, **portanto, cabe aqui investigar o problema**, sempre considerando as premissas anteriores.
 - Nesse caso, a partir da pasta `./app` (onde está seu *docker-compose*), é possível rodar o comando `docker-compose logs` (Para ver todos os status) ou `docker-compose logs <nome-do-seu-serviço>` (Para mostrar somente o de um escopo específico).
   - ⚠️ é indicado remover o parâmetro `restart: 'always'` do seu serviço, para que o mesmo não polua seus logs;
   - No nosso contexto, rodando o comando `docker-compose logs backend`:
 
-![docker-compose logs backend](assets/compose-status-04.png)
+![docker-compose logs backend](compose-status-04.png)
 
 > Aqui não houve problema com o `tsc`, porém a senha para acesso ao banco pelo sequelize estava errada.
 
